@@ -100,7 +100,9 @@ sub delete {
                 ? "was successful"
                 : "failed";
 
-            print "delete index '$index' $status\n";
+            if (!$self->{quiet}) {
+                print "delete index '$index' $status\n";
+            }
         } elsif (!$self->{run}) {
             print "skip index '$index'\n";
         }
@@ -160,6 +162,7 @@ my $proto    = "http";
 my $auth     = undef;
 my $index    = "logstash";
 my $delete   = undef;
+my $quiet    = undef;
 my $run      = undef;
 my $help     = undef;
 my $version  = undef;
@@ -170,6 +173,7 @@ GetOptions(
     "a|auth=s"   => \$auth,
     "i|index=s"  => \$index,
     "d|delete=s" => \$delete,
+    "q|quiet"    => \$quiet,
     "r|run"      => \$run,
     "h|help"     => \$help
 ) or exit 1;
@@ -193,6 +197,8 @@ if ($help) {
     print "    This parameter must be set to really delete indices.\n";
     print "    If the parameter is not set then the indices are printed to\n";
     print "    stdout that would be deleted if the parameter --run were set.\n";
+    print "-q, --quiet\n";
+    print "    Suppress output.\n";
     print "-h, --help\n";
     print "    Print the help.\n";
     print "\n";
@@ -216,6 +222,7 @@ ES::Index->delete(
     auth   => $auth,
     index  => $index,
     delete => $delete,
+    quiet  => $quiet,
     run    => $run
 );
 
