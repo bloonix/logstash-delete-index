@@ -188,7 +188,7 @@ if ($help) {
     print "-i, --index Base name of index index-YY.MM.DD\n";
     print "    Default: logstash-YY.MM.DD.\n";
     print "-d, --delete <days>\n";
-    print "    Delete all indexes that are older than --delete days.\n";
+    print "    Delete all indices that are older than --delete days.\n";
     print "-r, --run\n";
     print "    This parameter must be set to really delete indices.\n";
     print "    If the parameter is not set then the indices are printed to\n";
