@@ -73,14 +73,14 @@ sub delete {
     my @time = (localtime(time - ($opts{delete} * 86400)))[3,4,5];
     my $time = sprintf("%04d%02d%02d", $time[2] + 1900, $time[1] + 1, $time[0]);
     my $uri  = "$opts{proto}://$opts{host}";
-    my $res  = $self->request(GET => "$uri/_status") or die $self->errstr;
+    my $res  = $self->request(GET => "$uri/_aliases") or die $self->errstr;
 
-    if (!exists $res->{indices} || !scalar keys %{$res->{indices}}) {
+    if (!scalar keys %$res) {
         print "no indices found\n";
         exit 0;
     }
 
-    foreach my $index (keys %{$res->{indices}}) {
+    foreach my $index (keys %$res) {
         if ($index =~ /^$self->{index}\-(\d\d\d\d)\.(\d\d)\.(\d\d)/) {
             my $itime = "$1$2$3";
 
